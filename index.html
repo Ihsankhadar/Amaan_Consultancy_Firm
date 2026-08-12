@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amaan Advisory — Bookkeeping, Financial Planning & Credit-Readiness Training for SMEs</title>
+<meta name="description" content="We help small and medium businesses keep clean books, plan their finances, and build the record they need to open bank accounts, use mobile money, and qualify for credit.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#F1EEE4;
+    --paper-line:#DCD6C3;
+    --ink:#1B2430;
+    --ink-soft:#4A5160;
+    --ledger-green:#1F4D3D;
+    --ledger-green-dim:#EDE9E0;
+    --gold:#B8862E;
+    --red-rule:#9C3B34;
+    --white:#FBFAF6;
+    --radius:2px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.1;
+    margin:0;
+    color:var(--ink);
+  }
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- ruled paper texture ---------- */
+  .ruled{
+    background-image:repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 37px,
+      var(--paper-line) 37px,
+      var(--paper-line) 38px
+    );
+  }
+
+  /* ---------- ledger tick divider (signature structural device) ---------- */
+  .ledger-strip{
+    display:flex;
+    align-items:center;
+    gap:0;
+    height:34px;
+    margin:0;
+    position:relative;
+    overflow:hidden;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+  }
+  .ledger-strip::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:repeating-linear-gradient(
+      to right,
+      var(--ink) 0,
+      var(--ink) 1px,
+      transparent 1px,
+      transparent 24px
+    );
+    opacity:0.55;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--paper);
+    border-bottom:1px solid var(--ink);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .brand{
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .brand-mark{
+    font-family:'Fraunces', serif; font-weight:600; font-style:italic;
+    font-size:1.5rem; color:var(--ledger-green);
+  }
+  .brand-sub{
+    font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  nav.links{display:flex; gap:28px; font-size:0.92rem;}
+  nav.links a{text-decoration:none; color:var(--ink); position:relative;}
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:-4px; width:0; height:1.5px;
+    background:var(--gold); transition:width .25s ease;
+  }
+  nav.links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--ledger-green); color:var(--white);
+    padding:9px 18px; border-radius:var(--radius);
+    text-decoration:none; font-size:0.88rem; font-weight:500;
+    border:1px solid var(--ledger-green);
+  }
+  .nav-cta:hover{background:#183d31;}
+  .menu-btn{display:none;background:none;border:1px solid var(--ink);padding:8px 10px;font-size:0.85rem;cursor:pointer;font-family:inherit;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:88px 0 64px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:56px; align-items:start;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.76rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ledger-green); font-weight:600; margin-bottom:18px;
+  }
+  .eyebrow::before{content:'§'; font-family:'Fraunces',serif; font-style:italic;}
+  .hero h1{
+    font-size:clamp(2.1rem, 4vw, 3.4rem);
+    max-width:14ch;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{color:var(--ledger-green); font-style:italic;}
+  .hero p.lede{
+    margin-top:22px; font-size:1.08rem; color:var(--ink-soft); max-width:46ch;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--ink); color:var(--white); text-decoration:none;
+    padding:13px 24px; border-radius:var(--radius); font-weight:500; font-size:0.95rem;
+    border:1px solid var(--ink);
+  }
+  .btn-primary:hover{background:var(--ledger-green); border-color:var(--ledger-green);}
+  .btn-ghost{
+    text-decoration:none; padding:13px 22px; border-radius:var(--radius);
+    border:1px solid var(--ink); font-size:0.95rem; color:var(--ink); font-weight:500;
+  }
+  .btn-ghost:hover{background:var(--ink); color:var(--white);}
+
+  /* stamp — signature element */
+  .stamp-wrap{display:flex; justify-content:center; align-items:flex-start; padding-top:8px;}
+  .stamp{
+    width:172px; height:172px; border-radius:50%;
+    border:3px double var(--red-rule);
+    display:flex; align-items:center; justify-content:center;
+    transform:rotate(-11deg);
+    position:relative;
+    color:var(--red-rule);
+    opacity:0; transform-origin:center;
+  }
+  .stamp.in{ animation:stampdown .5s ease-out .3s forwards; }
+  @keyframes stampdown{
+    0%{opacity:0; transform:rotate(-11deg) scale(1.5);}
+    60%{opacity:1; transform:rotate(-11deg) scale(0.92);}
+    100%{opacity:1; transform:rotate(-11deg) scale(1);}
+  }
+  .stamp-inner{
+    text-align:center; font-family:'IBM Plex Mono', monospace;
+    text-transform:uppercase; letter-spacing:0.06em;
+  }
+  .stamp-inner .big{font-size:0.95rem; font-weight:600; display:block;}
+  .stamp-inner .small{font-size:0.58rem; display:block; margin-top:3px;}
+  .stamp-ring{
+    position:absolute; inset:10px; border-radius:50%; border:1px solid var(--red-rule);
+  }
+
+  /* ---------- ledger entries (services as account lines) ---------- */
+  section{padding:72px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:40px; gap:24px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(1.6rem, 2.6vw, 2.2rem);}
+  .section-head .col-label{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--ink-soft);
+    text-align:right; max-width:26ch;
+  }
+
+  .entry{
+    display:grid;
+    grid-template-columns:56px 1fr auto;
+    gap:24px;
+    align-items:start;
+    padding:26px 0;
+    border-bottom:1px solid var(--paper-line);
+  }
+  .entry:first-child{border-top:1px solid var(--ink);}
+  .entry-no{font-family:'IBM Plex Mono', monospace; color:var(--gold); font-size:0.95rem; padding-top:3px;}
+  .entry-body h3{font-size:1.18rem; margin-bottom:8px;}
+  .entry-body p{margin:0; color:var(--ink-soft); max-width:56ch; font-size:0.97rem;}
+  .entry-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ledger-green);
+    border:1px solid var(--ledger-green); padding:5px 10px; border-radius:20px;
+    white-space:nowrap; height:fit-content;
+  }
+
+  /* ---------- programs / process ---------- */
+  .programs-bg{background:var(--ledger-green); color:var(--white);}
+  .programs-bg h2{color:var(--white);}
+  .programs-bg .section-head .col-label{color:#BFD6CB;}
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    border-top:1px solid rgba(255,255,255,0.35);
+  }
+  .step{
+    padding:28px 22px; border-right:1px solid rgba(255,255,255,0.35);
+  }
+  .step:last-child{border-right:none;}
+  .step .num{
+    font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--gold);
+    display:block; margin-bottom:14px;
+  }
+  .step h3{font-size:1.02rem; color:var(--white); font-weight:600; margin-bottom:8px; font-family:'IBM Plex Sans', sans-serif;}
+  .step p{margin:0; font-size:0.9rem; color:#D8E6DF;}
+
+  /* ---------- why / stats ---------- */
+  .stats{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:44px;
+  }
+  .stat{border-left:2px solid var(--ledger-green); padding-left:18px;}
+  .stat .num{font-family:'Fraunces',serif; font-style:italic; font-size:2.2rem; color:var(--ledger-green); display:block;}
+  .stat .label{font-size:0.88rem; color:var(--ink-soft);}
+
+  /* ---------- contact ---------- */
+  .contact-bg{background:var(--white); border-top:1px solid var(--ink);}
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .contact-info h2{font-size:clamp(1.7rem,2.8vw,2.3rem); margin-bottom:16px;}
+  .contact-info p{color:var(--ink-soft); max-width:42ch;}
+  .contact-list{list-style:none; padding:0; margin:32px 0 0; display:flex; flex-direction:column; gap:16px;}
+  .contact-list li{display:flex; gap:14px; align-items:baseline; font-size:0.98rem;}
+  .contact-list .k{font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--gold); text-transform:uppercase; width:88px; flex-shrink:0;}
+  .contact-list a{text-decoration:none; border-bottom:1px solid var(--paper-line);}
+  .contact-list a:hover{border-color:var(--ink);}
+
+  form{display:flex; flex-direction:column; gap:16px;}
+  .field label{
+    display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:6px;
+  }
+  .field input, .field textarea{
+    width:100%; border:none; border-bottom:1.5px solid var(--ink);
+    background:transparent; padding:10px 2px; font-family:'IBM Plex Sans',sans-serif;
+    font-size:0.98rem; color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus{
+    outline:none; border-bottom-color:var(--ledger-green);
+  }
+  .field textarea{resize:vertical; min-height:90px;}
+  .submit-row{display:flex; align-items:center; gap:16px; margin-top:6px;}
+  .submit-btn{
+    background:var(--ink); color:var(--white); border:1px solid var(--ink);
+    padding:13px 26px; font-family:'IBM Plex Sans',sans-serif; font-size:0.95rem;
+    font-weight:500; cursor:pointer; border-radius:var(--radius);
+  }
+  .submit-btn:hover{background:var(--ledger-green); border-color:var(--ledger-green);}
+  .submit-note{font-size:0.8rem; color:var(--ink-soft);}
+
+  footer{
+    background:var(--ink); color:#C9CCD3; padding:36px 0; font-size:0.85rem;
+  }
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  footer .brand-mark{color:var(--white);}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (max-width: 860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .stamp-wrap{padding-top:20px;}
+    .stats{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr 1fr;}
+    .step{border-bottom:1px solid rgba(255,255,255,0.35);}
+    .contact-grid{grid-template-columns:1fr;}
+    nav.links{display:none;}
+    .menu-btn{display:block;}
+  }
+  @media (max-width: 560px){
+    .steps{grid-template-columns:1fr;}
+    .entry{grid-template-columns:36px 1fr; }
+    .entry-tag{grid-column:2 / 3;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .stamp{animation:none !important; opacity:1; transform:rotate(-11deg);}
+    .reveal{transition:none; opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <span class="brand-mark">Amaan Advisory</span>
+      <span class="brand-sub">SME Finance & Credit-Readiness</span>
+    </div>
+    <nav class="links">
+      <a href="#services">Services</a>
+      <a href="#programs">Training</a>
+      <a href="#why">Why us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Talk to us</a>
+  </div>
+</header>
+
+<section class="hero ruled">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Bookkeeping · Planning · Credit Access</span>
+      <h1>Turn your daily sales into a record <em>banks believe</em>.</h1>
+      <p class="lede">We help small and medium businesses fix their bookkeeping, build better money habits, and prepare the paperwork and track record needed to open bank accounts, use mobile money, and qualify for credit.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#contact">Book a free consultation</a>
+        <a class="btn-ghost" href="#services">See our services</a>
+      </div>
+    </div>
+    <div class="stamp-wrap">
+      <div class="stamp" id="stamp">
+        <div class="stamp-ring"></div>
+        <span class="stamp-inner">
+          <span class="big">Credit<br>Ready</span>
+          <span class="small">Amaan Advisory</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="ledger-strip"></div></div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>What we do</h2>
+      <span class="col-label mono">Four line items, one goal — a business a bank will say yes to.</span>
+    </div>
+
+    <div class="entry reveal">
+      <span class="entry-no mono">01</span>
+      <div class="entry-body">
+        <h3>Bookkeeping, set up and cleaned up</h3>
+        <p>We put in place a simple daily ledger for your income, expenses, and stock — on paper or a phone app — so you always know exactly where your money is going.</p>
+      </div>
+      <span class="entry-tag">Weekly support</span>
+    </div>
+
+    <div class="entry reveal">
+      <span class="entry-no mono">02</span>
+      <div class="entry-body">
+        <h3>Financial behaviour coaching</h3>
+        <p>We work with owners on the habits that quietly sink businesses — mixing personal and business cash, skipping records, spending profit before costs are covered — and replace them with routines that stick.</p>
+      </div>
+      <span class="entry-tag">1:1 coaching</span>
+    </div>
+
+    <div class="entry reveal">
+      <span class="entry-no mono">03</span>
+      <div class="entry-body">
+        <h3>Financial planning &amp; budgeting</h3>
+        <p>Cash-flow forecasts, pricing checks, and a simple growth budget, so decisions about stock, staff, or expansion are made from numbers, not guesswork.</p>
+      </div>
+      <span class="entry-tag">Quarterly review</span>
+    </div>
+
+    <div class="entry reveal">
+      <span class="entry-no mono">04</span>
+      <div class="entry-body">
+        <h3>Digital finance &amp; credit-access training</h3>
+        <p>Hands-on training on opening and using a business bank account, working with mobile money for daily sales and payments, and meeting the exact requirements lenders ask for before you apply.</p>
+      </div>
+      <span class="entry-tag">Group workshops</span>
+    </div>
+  </div>
+</section>
+
+<section id="programs" class="programs-bg">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>The credit-readiness path</h2>
+      <span class="col-label mono">Our training runs in this order, for a reason.</span>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <span class="num mono">Step 1</span>
+        <h3>Record every shilling</h3>
+        <p>Start a daily ledger of sales, costs, and stock — the raw record every later step is built on.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">Step 2</span>
+        <h3>Build a track record</h3>
+        <p>Keep it up for a set period so there's a consistent history to show, not just one good month.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">Step 3</span>
+        <h3>Meet the requirements</h3>
+        <p>Learn exactly what banks and lenders ask for — documents, statements, guarantors — and get them in order.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">Step 4</span>
+        <h3>Open accounts &amp; apply</h3>
+        <p>Open a business bank account, set up mobile money for the business, and apply for credit with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Why business owners work with us</h2>
+      <span class="col-label mono">Practical training, not theory.</span>
+    </div>
+    <p class="reveal" style="max-width:64ch; color:var(--ink-soft); font-size:1.02rem;">
+      We're not a bank and we don't lend money ourselves. We prepare your business so that when you walk into a bank, a microfinance institution, or a mobile money provider, you already meet what they're asking for — clean records, a clear plan, and the right documents.
+    </p>
+    <div class="stats reveal">
+      <div class="stat">
+        <span class="num mono">1:1</span>
+        <span class="label">Coaching sessions built around your own books, not a generic course</span>
+      </div>
+      <div class="stat">
+        <span class="num mono">4</span>
+        <span class="label">Step training path from first ledger entry to a credit application</span>
+      </div>
+      <div class="stat">
+        <span class="num mono">100%</span>
+        <span class="label">Local — sessions run in person or by phone, on your business hours</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-bg">
+  <div class="wrap contact-grid">
+    <div class="contact-info reveal">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Let's look at your books together.</h2>
+      <p>Tell us a bit about your business and where you're stuck — bookkeeping, planning, or getting credit-ready — and we'll get back to you to set up a first, free conversation.</p>
+      <ul class="contact-list">
+        <li><span class="k mono">Email</span> <a href="mailto:ihsankhadarmohamed@gmail.com">ihsankhadarmohamed@gmail.com</a></li>
+        <li><span class="k mono">Phone</span> <a href="tel:+252000000000">+252 00 000 0000</a></li>
+        <li><span class="k mono">WhatsApp</span> <a href="https://wa.me/25200000000" target="_blank" rel="noopener">Chat with us</a></li>
+        <li><span class="k mono">Office</span> <span>Hargeisa, Somaliland</span></li>
+      </ul>
+    </div>
+
+    <form class="reveal" id="contactForm">
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" required placeholder="Full name">
+      </div>
+      <div class="field">
+        <label for="business">Business name</label>
+        <input id="business" name="business" type="text" placeholder="e.g. Barwaaqo General Trading">
+      </div>
+      <div class="field">
+        <label for="contact">Email or phone</label>
+        <input id="contact" name="contact" type="text" required placeholder="How should we reach you?">
+      </div>
+      <div class="field">
+        <label for="message">What do you need help with?</label>
+        <textarea id="message" name="message" placeholder="e.g. I need help setting up bookkeeping and opening a business bank account"></textarea>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="submit-btn">Send message</button>
+        <span class="submit-note">Opens your email app — nothing is stored on this site.</span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span class="brand-mark mono">Amaan Advisory</span>
+    <span>&copy; <span id="year"></span> Amaan Advisory. Bookkeeping, planning &amp; credit-readiness training for SMEs.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // mailto fallback submit — static site, no backend
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const business = form.business.value.trim();
+    const contact = form.contact.value.trim();
+    const message = form.message.value.trim();
+    const subject = encodeURIComponent('Consultation request — ' + (business || name));
+    const body = encodeURIComponent(
+      'Name: ' + name + '\n' +
+      'Business: ' + business + '\n' +
+      'Reach me at: ' + contact + '\n\n' +
+      'Message:\n' + message
+    );
+    window.location.href = 'mailto:ihsankhadarmohamed@gmail.com?subject=' + subject + '&body=' + body;
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.15});
+    revealEls.forEach(el=>io.observe(el));
+  } else {
+    revealEls.forEach(el=>el.classList.add('in'));
+  }
+
+  // stamp animation trigger
+  const stamp = document.getElementById('stamp');
+  setTimeout(()=>stamp.classList.add('in'), 150);
+</script>
+
+</body>
+</html>
